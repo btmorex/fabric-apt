@@ -1,2 +1,2 @@
-# fabric_apt
-Common apt operations as fabric tasks
+# fabric_common
+Common operations as fabric tasks
