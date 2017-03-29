@@ -1,2 +1,2 @@
 # fabric-apt
-Common apt-get operations as Fabric tasks
+Common apt operations as fabric tasks
