@@ -1,4 +1,4 @@
-from fabric.api import run, settings, task
+from fabric.api import task
 
 from .helper import run_as_root
 
