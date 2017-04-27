@@ -17,4 +17,9 @@ def ensure():
         put(sources, '/etc/apt/sources.list.d/nginx.list')
         apt.update()
         apt.ensure('nginx')
+
+@task
+def restart():
+    with settings(user='root'):
         run('nginx -t')
+        run('service nginx restart')
