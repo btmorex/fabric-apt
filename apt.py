@@ -21,7 +21,7 @@ def dist_upgrade():
 
 @task
 def ensure(pkg):
-    run_as_root('dpkg --status %s 2&>1 >/dev/null || %s' % (pkg, apt_get_cmd('install', pkg)))
+    run_as_root('dpkg --status %s &>/dev/null || %s' % (pkg, apt_get_cmd('install', pkg)))
 
 @task
 def install(pkg):
