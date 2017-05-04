@@ -19,6 +19,12 @@ def ensure():
         apt.ensure('nginx')
 
 @task
+def reload():
+    with settings(user='root'):
+        run('nginx -t')
+        run('service nginx reload')
+
+@task
 def restart():
     with settings(user='root'):
         run('nginx -t')

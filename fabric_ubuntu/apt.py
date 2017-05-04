@@ -12,6 +12,11 @@ def apt_get_cmd(cmd, *args):
     ] + list(args))
 
 @task
+def add_repository(repo):
+    run_as_root('add-apt-repository --yes {}'.format(repo))
+    update()
+
+@task
 def autoremove():
     run_as_root(apt_get_cmd('autoremove', '--purge'))
 
