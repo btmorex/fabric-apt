@@ -13,9 +13,9 @@ def ensure():
             'certbot -q renew \\&\\& service nginx reload', backup='')
 
 @task
-def request(webroot, domain, email=None):
+def request(webroot, domains, email=None):
     if email is None:
-        email = 'hostmaster@' + '.'.join(domain.split('.')[-2:])
+        email = 'hostmaster@' + '.'.join(domains[0].split('.')[-2:])
     with settings(user='root'):
         cmd = [
             'certbot',
@@ -25,6 +25,7 @@ def request(webroot, domain, email=None):
             '--no-eff-email',
             '--webroot',
             '--webroot-path', webroot,
-            '-d', domain
         ]
+        for domain in domains:
+            cmd.extend(['-d', domain])
         run(' '.join(cmd))
