@@ -19,13 +19,22 @@ def ensure():
         apt.ensure('postgresql')
 
 @task
-def create_user(user):
+def delete_user(user):
     with settings(user='root'):
         run('su --login --command "dropuser --if-exists {}" postgres'.format(user))
+
+@task
+def create_user(user):
+    delete_user(user)
+    with settings(user='root'):
         run('su --login --command "createuser {}" postgres'.format(user))
 
 @task
-def create_db(db, user):
+def delete_db(db):
     with settings(user='root'):
         run('su --login --command "dropdb --if-exists {}" postgres'.format(db))
+@task
+def create_db(db, user):
+    delete_db(db)
+    with settings(user='root'):
         run('su --login --command "createdb --owner={} {}" postgres'.format(user, db))
