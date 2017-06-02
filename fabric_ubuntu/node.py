@@ -13,7 +13,7 @@ def ensure():
             codename = run('lsb_release --codename --short')
         sources = StringIO()
         sources.name = 'nodesource.list'
-        sources.write('deb https://deb.nodesource.com/node_7.x {} main\n'.format(codename))
+        sources.write('deb https://deb.nodesource.com/node_8.x {} main\n'.format(codename))
         put(sources, '/etc/apt/sources.list.d/nodesource.list')
         run('wget --quiet https://dl.yarnpkg.com/debian/pubkey.gpg')
         run('apt-key add pubkey.gpg')
