@@ -35,6 +35,5 @@ def delete_db(db):
         run('su --login --command "dropdb --if-exists {}" postgres'.format(db))
 @task
 def create_db(db, user):
-    delete_db(db)
     with settings(user='root'):
         run('su --login --command "createdb --owner={} {}" postgres'.format(user, db))
