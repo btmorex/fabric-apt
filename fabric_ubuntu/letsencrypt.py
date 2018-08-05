@@ -1,16 +1,20 @@
-from fabric.api import run, settings, task
-from fabric.contrib.files import sed
+from fabric.api import put, run, settings, task
+from fabric.contrib.files import exists, sed
+from StringIO import StringIO
 
 from . import apt
 
 @task
-def ensure():
+def ensure(server=None):
     with settings(user='root'):
         apt.add_repository('ppa:certbot/certbot')
         apt.ensure('certbot')
-        sed('/etc/cron.d/certbot',
-            'certbot -q renew',
-            'certbot -q renew \\&\\& service nginx reload', backup='')
+        if exists('/etc/letsencrypt/renewal-hooks/deploy') and server is not None:
+            hook = StringIO()
+            hook.name = server
+            hook.write('#!/bin/sh')
+            hook.write('systemctl reload %s' % server)
+            put(hook, '/etc/letsencrypt/renewal-hooks/deploy/%s' % server)
 
 @task
 def request(webroot, domains, email=None):
